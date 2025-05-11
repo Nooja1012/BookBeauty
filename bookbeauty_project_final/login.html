@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BookBeauty - Log ind</title>
+  <style>
+    body {
+      background: #e0e0e0;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 40px 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+    .mobile-wrapper {
+      width: 375px;
+      background: linear-gradient(#f9d5d3, #f6e1db);
+      border-radius: 30px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.2);
+      overflow: hidden;
+      padding: 20px;
+      min-height: 600px;
+      display: flex;
+      flex-direction: column;
+      align-items: center; /* <<< Dette centrerer logo og form */
+    }
+    .logo {
+      margin-top: 20px;
+      margin-bottom: 30px;
+    }
+    .logo img {
+      width: 120px;
+    }
+    input {
+      width: 80%;
+      margin: 10px 0;
+      padding: 10px;
+      border: none;
+      border-bottom: 1px solid #aaa;
+      background: transparent;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 30px;
+      background: #f9f8f6;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .forgot {
+      font-size: 12px;
+      margin-top: 10px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+
+<div class="mobile-wrapper">
+  <div class="logo">
+    <img src="images/logo.png" alt="BookBeauty logo">
+  </div>
+
+  <h1>Velkommen</h1>
+
+  <form action="vaelg_behandler.html" method="get" style="width: 100%; text-align: center;">
+    <input type="text" placeholder="Brugernavn" required><br>
+    <input type="password" placeholder="Kodeord" required><br>
+    <button type="submit">Log in</button>
+  </form>
+
+  <div class="forgot">Glemt kodeord</div>
+
+  <br><br>
+  <button onclick="location.href='vaelg_behandler.html'">Opret profil</button>
+</div>
+
+</body>
+</html>
