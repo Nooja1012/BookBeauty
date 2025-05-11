@@ -1,0 +1,197 @@
+
+/* Fælles layout */
+body {
+  background: #e0e0e0;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 40px 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+}
+
+.mobile-wrapper {
+  width: 375px;
+  background: #ffffff;
+  border-radius: 30px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  overflow: hidden;
+  padding: 20px;
+}
+
+/* Header billede */
+.header img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+/* Info-blok */
+.info {
+  text-align: center;
+  padding: 10px 0;
+}
+.info h2 {
+  font-size: 22px;
+  color: #3d4f6c;
+  margin: 10px 0 5px;
+}
+.info p {
+  font-size: 14px;
+  color: #666;
+  margin: 0;
+}
+
+/* Service cards */
+.service-card {
+  background: white;
+  margin: 10px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  text-align: center;
+  cursor: pointer;
+}
+.service-card img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+.service-name {
+  padding: 10px;
+  font-weight: bold;
+}
+.stars {
+  color: gold;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* Buttons */
+button, .action-button, .book-button {
+  padding: 12px 20px;
+  background: #fde8e7;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 14px;
+  color: #3d4f6c;
+  cursor: pointer;
+  transition: background 0.3s;
+  width: 100%;
+  margin: 10px 0;
+}
+button:hover, .action-button:hover, .book-button:hover {
+  background: #f7d4d3;
+}
+
+/* Times section */
+.times-section h3 {
+  margin-bottom: 20px;
+  color: #3d4f6c;
+  font-size: 20px;
+  text-align: center;
+}
+.time-slot {
+  background: #fde8e7;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  font-weight: bold;
+}
+.time-slot span {
+  display: block;
+  font-weight: normal;
+  font-size: 13px;
+  color: #555;
+  margin-top: 5px;
+}
+
+/* Treatments */
+.treatment {
+  background: #fde8e7;
+  margin: 15px 0;
+  padding: 15px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.treatment img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+.treatment-text {
+  flex: 1;
+}
+.treatment-text h4 {
+  margin: 0 0 5px;
+  font-size: 16px;
+}
+.treatment-text p {
+  margin: 0;
+  font-size: 13px;
+  color: #555;
+}
+.price-time {
+  margin-top: 5px;
+  font-weight: bold;
+  font-size: 14px;
+}
+.notice, .note {
+  font-size: 12px;
+  color: #888;
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Form fields */
+label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+  font-size: 14px;
+}
+input, textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+/* Logo and login */
+.logo {
+  margin-top: 20px;
+  margin-bottom: 30px;
+  text-align: center;
+}
+.logo img {
+  width: 120px;
+}
+.forgot {
+  font-size: 12px;
+  margin-top: 10px;
+  color: #999;
+}
+
+/* Booking confirmation */
+.success-icon {
+  font-size: 60px;
+  color: #4CAF50;
+  margin-bottom: 20px;
+}
+.policy {
+  font-size: 12px;
+  color: #888;
+  margin-top: 30px;
+  text-align: center;
+}
