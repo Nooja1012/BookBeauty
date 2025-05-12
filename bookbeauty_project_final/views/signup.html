@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/index.css">
+  <title>BookBeauty - Opret profil</title>
+  <script src="../js/script.js" defer></script>
+</head>
+<body>
+
+<div class="mobile-wrapper">
+  <div class="logo">
+    <img src="../images/logo.png" alt="BookBeauty logo">
+  </div>
+
+  <h1>Opret bruger</h1>
+
+  <form onsubmit="signupUser(event)" style="width: 100%; text-align: center;">
+    <input type="email" id="signup-email" placeholder="Din e-mail" required><br>
+    <input type="password" id="signup-password" placeholder="Vælg kodeord" required><br>
+    <button type="submit">Opret</button>
+  </form>
+  
+
+  <p style="margin-top: 20px;">Har du allerede en bruger?  
+    <a href="login.html">Log ind</a>
+  </p>
+</div>
+
+</body>
+</html>
