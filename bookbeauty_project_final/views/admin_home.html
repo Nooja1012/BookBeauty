@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .logout-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: none;
+      border: none;
+      color: #3d4f6c;
+      font-weight: bold;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .time-slot {
+      padding: 8px;
+      margin-bottom: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    #admin-booking-list {
+      margin-top: 30px;
+      padding: 10px;
+      background: #fafafa;
+      border-top: 1px solid #ccc;
+    }
+
+    .booking-item {
+      padding: 10px 0;
+      border-bottom: 1px solid #eee;
+    }
+  </style>
+  <script src="../js/script.js" defer></script>
+</head>
+<body>
+  <div class="mobile-wrapper">
+    <button class="logout-button" onclick="logout()">⟵ Log ud</button>
+    <h2 style="text-align:center;">Velkommen, erhvervsbruger</h2>
+
+    <label for="ny-tid">Tilføj ledig tid:</label><br>
+    <input type="datetime-local" id="ny-tid">
+    <button onclick="gemNyTid()">Tilføj tid</button>
+
+    <div id="times-list">
+      <h3>Dine ledige tider</h3>
+      <div id="admin-booking-list">
+        <h3>Kundebookinger</h3>
+        <div id="bookings-output"></div>
+      </div>
+      
+    </div>
+
+  </div>
+</body>
+</html>

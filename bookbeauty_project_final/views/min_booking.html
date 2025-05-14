@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+  <meta charset="UTF-8">
+  <title>Min booking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../css/style.css">
+  <style>
+    .booking-item {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .booking-item button {
+      background: #ff5555;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    function visBooking() {
+      const container = document.getElementById("booking-details");
+      const bookinger = JSON.parse(localStorage.getItem("mineBookinger") || "[]");
+
+      if (bookinger.length === 0) {
+        container.innerHTML = "<p style='text-align:center;'>Du har ingen aktive bookinger.</p>";
+        return;
+      }
+
+      container.innerHTML = bookinger.map((b, index) => `
+        <div class="booking-item">
+          <p>${b}</p>
+          <button onclick="annullerBooking(${index})">Annuller</button>
+        </div>
+      `).join("");
+    }
+
+    function annullerBooking(index) {
+      let bookinger = JSON.parse(localStorage.getItem("mineBookinger") || "[]");
+      const fjernet = bookinger.splice(index, 1)[0];
+
+      // flyt tidspunkt til afbudTimes
+      const tid = fjernet.split(" – ")[0];
+      let afbud = JSON.parse(localStorage.getItem("afbudTimes") || "[]");
+      afbud.push(tid);
+      localStorage.setItem("afbudTimes", JSON.stringify(afbud));
+
+      // opdater bookinger
+      localStorage.setItem("mineBookinger", JSON.stringify(bookinger));
+      visBooking();
+    }
+
+    document.addEventListener("DOMContentLoaded", visBooking);
+  </script>
+</head>
+<body>
+  <div class="mobile-wrapper">
+    <h2 style="text-align:center;">Mine bookinger</h2>
+    <div id="booking-details"></div>
+
+    <div class="bottom-nav">
+      <button onclick="location.href='vaelg_behandler.html'">🏠<br>Hjem</button>
+      <button onclick="location.href='ledige_tider.html?type=normal'">📅<br>Book tid</button>
+      <button onclick="location.href='min_booking.html'">🧾<br>Min booking</button>
+    </div>
+  </div>
+</body>
+</html>

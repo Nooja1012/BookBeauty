@@ -3,54 +3,53 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="../css/style.css">
-  <script src="../js/script.js"></script>
-
   <title>BookBeauty - Ledige tider</title>
+  <link rel="stylesheet" href="../css/style.css">
+  <script>
+    function updateLedigeTiderTitelOgIndhold() {
+      const titleEl = document.getElementById("times-title");
+      const sectionEl = document.getElementById("times-section");
+      const params = new URLSearchParams(window.location.search);
+      const type = params.get("type") || "normal";
+
+      const key = type === "afbud" ? "afbudTimes" : "availableTimes";
+      const title = type === "afbud" ? "Ledige afbudstider" : "Ledige tider";
+
+      const tider = JSON.parse(localStorage.getItem(key) || "[]");
+      titleEl.textContent = title;
+
+      if (tider.length === 0) {
+        sectionEl.innerHTML = "<p style='text-align:center;'>Ingen tider tilgængelige</p>";
+      } else {
+        sectionEl.innerHTML = tider.map(t =>
+          `<div class="time-slot" onclick="vælgTidOgGåTilBehandling('${t}')">${t}</div>`
+        ).join("");
+      }
+    }
+
+    function vælgTidOgGåTilBehandling(tid) {
+      localStorage.setItem("valgtTid", tid);
+      window.location.href = "behandler_info.html";
+    }
+
+    document.addEventListener("DOMContentLoaded", updateLedigeTiderTitelOgIndhold);
+  </script>
 </head>
 <body>
 
 <div class="mobile-wrapper">
-
-  <div class="header">
-    <img src="../images/pureskin.png" alt="Pureskin">
-  </div>
-
-  <div class="info">
-    <h2>Pureskin</h2>
-    <p>Admiralvej 2, 2610 Rødovre</p>
-  </div>
-
   <div class="times-section">
-    <h3 id="times-title">Indlæser titel...</h3>
-
-    <div class="time-slot" onclick="location.href='behandler_info.html'">
-      Torsdag den 3. april
-      <span>Kl 8:30 - 9:30 (60 min)</span>
-    </div>
-
-    <div class="time-slot" onclick="location.href='behandler_info.html'">
-      Fredag den 4. april
-      <span>Kl 14:00 - 16:00 (120 min)</span>
-    </div>
-
-    <div class="time-slot" onclick="location.href='behandler_info.html'">
-      Tirsdag den 15. april
-      <span>Kl 10:30 - 11:30 (60 min)</span>
-    </div>
-
-    <div class="time-slot" onclick="location.href='behandler_info.html'">
-      Onsdag den 23. april
-      <span>Kl 12:30 - 13:30 (60 min)</span>
-    </div>
-
-    <div class="time-slot" onclick="location.href='behandler_info.html'">
-      Mandag den 28. april
-      <span>Kl 8:30 - 10:30 (120 min)</span>
-    </div>
-
+    <h3 id="times-title">Indlæser tider...</h3>
+    <div id="times-section"></div>
   </div>
 
+  <div class="bottom-nav">
+    <button onclick="location.href='vaelg_behandler.html'">🏠 Hjem</button>
+    <button onclick="location.href='ledige_tider.html?type=normal'">📅 Book tid</button>
+    <button onclick="location.href='min_booking.html'">🧾 Min booking</button>
+  </div>
+  
+  
 </div>
 
 </body>
