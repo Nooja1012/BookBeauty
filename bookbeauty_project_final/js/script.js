@@ -23,7 +23,8 @@ class Business {
   }
 }
 
-// Signup for kunde
+// === SIGNUP & LOGIN ===
+
 function signupUser(event) {
   event.preventDefault();
   const email = document.getElementById("signup-email").value;
@@ -38,7 +39,6 @@ function signupUser(event) {
   window.location.href = "login.html";
 }
 
-// Signup for erhvervsbruger
 function signupBusiness(event) {
   event.preventDefault();
   const email = document.getElementById("business-email").value;
@@ -58,7 +58,6 @@ function signupBusiness(event) {
   window.location.href = "login.html";
 }
 
-// Login
 function loginUser(event) {
   event.preventDefault();
   const email = document.getElementById("login-email").value;
@@ -77,7 +76,8 @@ function loginUser(event) {
   }
 }
 
-// Vis tider for erhvervsbruger
+// === BOOKING FLOW ===
+
 function displayTimes() {
   const container = document.getElementById("times-list");
   if (!container) return;
@@ -85,7 +85,6 @@ function displayTimes() {
   container.innerHTML = times.map(t => `<div class="time-slot">${t}</div>`).join("");
 }
 
-// Opdater ledige tider på kunden-side
 function updateLedigeTiderTitel() {
   const title = document.getElementById("times-title");
   const section = document.getElementById("times-section");
@@ -103,13 +102,11 @@ function updateLedigeTiderTitel() {
     : "<p style='text-align:center;'>Ingen tider tilgængelige</p>";
 }
 
-// Vælg tid og gå til behandling
 function vælgTidOgGåTilBehandling(tid) {
   localStorage.setItem("valgtTid", tid);
   window.location.href = "behandler_info.html";
 }
 
-// Vælg behandling og gem booking (kunde + admin)
 function vælgBehandling(navn) {
   const tid = localStorage.getItem("valgtTid");
   if (!tid) {
@@ -119,18 +116,14 @@ function vælgBehandling(navn) {
   }
 
   const samlet = `${tid} – ${navn}`;
-
-  // Gem i brugerens egne bookinger
   let mine = JSON.parse(localStorage.getItem("mineBookinger") || "[]");
   mine.push(samlet);
   localStorage.setItem("mineBookinger", JSON.stringify(mine));
 
-  // Fjern fra ledige tider
   let available = JSON.parse(localStorage.getItem("availableTimes") || "[]");
   available = available.filter(t => t !== tid);
   localStorage.setItem("availableTimes", JSON.stringify(available));
 
-  // Gem i global booking-liste til admin
   let allBookings = JSON.parse(localStorage.getItem("bookings") || "[]");
   allBookings.push({
     virksomhed: "PureSkin",
@@ -144,7 +137,6 @@ function vælgBehandling(navn) {
   window.location.href = "booking_bekraeftelse.html";
 }
 
-// Vis booket tid på bekræftelsesside
 function visBekraeftetTid() {
   const container = document.getElementById("booking-details");
   if (!container) return;
@@ -154,25 +146,60 @@ function visBekraeftetTid() {
   }
 }
 
-// Gem ny tid som erhvervsbruger via kalenderinput
-function gemNyTid() {
-  const input = document.getElementById("ny-tid");
-  if (!input || !input.value) return alert("Vælg dato og tidspunkt.");
+// === TIDSTILFØJELSE FOR ADMIN ===
 
-  const val = new Date(input.value);
-  const formatted = val.toLocaleString("da-DK", {
-    weekday: "long", day: "numeric", month: "long",
-    hour: "2-digit", minute: "2-digit"
-  });
+function opretTidsintervaller() {
+  const select = document.getElementById("ny-tidspunkt");
+  if (!select) return;
+  select.innerHTML = "";
 
-  let tider = JSON.parse(localStorage.getItem("availableTimes") || "[]");
-  tider.push(formatted);
-  localStorage.setItem("availableTimes", JSON.stringify(tider));
-  displayTimes();
-  input.value = "";
+  for (let h = 8; h <= 20; h++) {
+    for (let m = 0; m < 60; m += 5) {
+      const tid = `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}`;
+      const option = document.createElement("option");
+      option.value = tid;
+      option.textContent = tid;
+      select.appendChild(option);
+    }
+  }
 }
 
-// Vis alle bookinger for admin (PureSkin)
+function gemNyTidDropdown() {
+  const dato = document.getElementById("ny-dato").value;
+  const tidspunkt = document.getElementById("ny-tidspunkt").value;
+  const varighed = parseInt(document.getElementById("tid-varighed").value, 10);
+
+  if (!dato || !tidspunkt || !varighed) {
+    alert("Udfyld alle felter");
+    return;
+  }
+
+  const start = new Date(`${dato}T${tidspunkt}`);
+  const slut = new Date(start.getTime() + varighed * 60000);
+
+  const formatter = new Intl.DateTimeFormat("da-DK", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+
+  const startStr = formatter.format(start);
+  const slutStr = slut.toLocaleTimeString("da-DK", { hour: "2-digit", minute: "2-digit" });
+
+  const visning = `${startStr} - ${slutStr}`;
+
+  let tider = JSON.parse(localStorage.getItem("availableTimes") || "[]");
+  tider.push(visning);
+  localStorage.setItem("availableTimes", JSON.stringify(tider));
+
+  displayTimes();
+  document.getElementById("ny-dato").value = "";
+}
+
+// === ADMIN: VIS BOOKINGER ===
+
 function visBookingerForVirksomhed() {
   const container = document.getElementById("bookings-output");
   if (!container) return;
@@ -190,42 +217,18 @@ function visBookingerForVirksomhed() {
   ).join("");
 }
 
-// Gammel annuller_tid.html (bruges ikke længere)
-function sendAnnullering(event) {
-  event.preventDefault();
-  const dato = document.getElementById("dato")?.value;
-  if (!dato) {
-    alert("Vælg en dato");
-    return;
-  }
+// === LOG UD ===
 
-  let booked = JSON.parse(localStorage.getItem("bookedTimes") || "[]");
-  const match = booked.find(t => t.includes(dato));
-  if (!match) {
-    alert("Ingen booking fundet på denne dato");
-    return;
-  }
-
-  booked = booked.filter(t => !t.includes(dato));
-  localStorage.setItem("bookedTimes", JSON.stringify(booked));
-
-  const afbud = JSON.parse(localStorage.getItem("afbudTimes") || "[]");
-  afbud.push(match.split(" – ")[0]);
-  localStorage.setItem("afbudTimes", JSON.stringify(afbud));
-
-  alert("Din tid er annulleret og gjort tilgængelig som afbudstid.");
-  window.location.href = "vaelg_behandler.html";
-}
-
-// Log ud
 function logout() {
   alert("Du er nu logget ud.");
   window.location.href = "login.html";
 }
 
-// Init ved indlæsning
+// === INIT ===
+
 document.addEventListener("DOMContentLoaded", () => {
   if (typeof displayTimes === "function") displayTimes();
   if (typeof visBekraeftetTid === "function") visBekraeftetTid();
   visBookingerForVirksomhed();
+  opretTidsintervaller();
 });

@@ -5,6 +5,7 @@
   <title>Admin Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="../css/style.css">
+  <script src="../js/script.js" defer></script>
   <style>
     .logout-button {
       position: absolute;
@@ -36,27 +37,49 @@
       padding: 10px 0;
       border-bottom: 1px solid #eee;
     }
+
+    .time-form {
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin: 10px 0 5px;
+    }
   </style>
-  <script src="../js/script.js" defer></script>
 </head>
 <body>
   <div class="mobile-wrapper">
-    <button class="logout-button" onclick="logout()">⟵ Log ud</button>
-    <h2 style="text-align:center;">Velkommen, erhvervsbruger</h2>
+    <h2 style="text-align:center;">Velkommen</h2>
 
-    <label for="ny-tid">Tilføj ledig tid:</label><br>
-    <input type="datetime-local" id="ny-tid">
-    <button onclick="gemNyTid()">Tilføj tid</button>
+   <div class="time-form">
+  <label for="ny-dato">Dato:</label>
+  <input type="date" id="ny-dato">
+
+  <label for="ny-tidspunkt">Starttidspunkt:</label>
+  <select id="ny-tidspunkt"></select>
+
+  <label for="tid-varighed">Varighed:</label>
+  <select id="tid-varighed">
+    <option value="60">60 minutter</option>
+    <option value="120">120 minutter</option>
+  </select>
+
+  <button onclick="gemNyTidDropdown()">Tilføj tid</button>
+</div>
 
     <div id="times-list">
       <h3>Dine ledige tider</h3>
-      <div id="admin-booking-list">
-        <h3>Kundebookinger</h3>
-        <div id="bookings-output"></div>
-      </div>
-      
+      <!-- Dynamiske tider vises her -->
     </div>
 
+    <div id="admin-booking-list">
+      <h3>Kundebookinger</h3>
+      <div id="bookings-output"></div>
+    </div>
+  <button onclick="logout()">🚪<br>Log ud</button>
+</div>
   </div>
 </body>
 </html>
